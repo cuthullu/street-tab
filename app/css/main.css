@@ -1,0 +1,37 @@
+html, body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+}
+.full {
+    width: 100%;
+    height: 100%;
+}
+.holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+.text.holder{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.time.holder{
+    color: aliceblue;
+    font-size: xx-large;
+    flex-grow: 2;
+}
+
+.title.holder{
+    color: aliceblue;
+    font-size: smaller;
+}
+.title{}
+.subtitle{}
