@@ -18,7 +18,7 @@ function getLocation() {
     var time = Date.now();
     if (location === null || location.expires < Date.now()) {
         location = locations[Math.floor( Math.random() * locations.length )];
-        location.expires = Date.now() + (1000 * 60 * 60 * 24);
+        location.expires = getEndOfDay();
         localStorage.setItem('newTabWorldLocation', JSON.stringify(location));
     }
     return location;
@@ -29,6 +29,14 @@ function getTime() {
     var m = d.getMinutes();
     var ms = m < 10 ? "0" + m : m + "";
     return d.getHours() + ":" + ms;
+}
+
+function getEndOfDay() {
+    var t = new Date(Date.now());
+    t.setHours(23);
+    t.setMinutes(59);
+    t.setSeconds(59);
+
 }
 
 function getGreeting() {
