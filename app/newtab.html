@@ -6,19 +6,23 @@
     <title>Street View</title>
     <script src="data/locations.js"></script>
     <script src="js/streetUrlService.js"></script>
+    <script src="js/touching.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <link href="css/main.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body id="bod">
     <iframe id="frame" class="full" frameborder="0" style="border:0"></iframe>
     <div class="text holder">
-        <div class="title holder">
-            <h2 class="title" id="title"></h2>
-            <h3 class="subtitle" id="subtitle"></h3>
-        </div>
-        <div class="time holder">
+        <div class="top-right holder">
             <h1 class="time" id="time"></h1>
-            <h2 class="greeting" id="greeting"></h2>
+        </div>
+        <div class="center holder">
+            <div class="pull-out" id="sidePanel">
+                <h2 class="greeting" id="greeting"></h2>
+                <h4 class="welcome" id="welcome"></h4>
+                <h3 class="subtitle" id="subtitle"></h3>
+            </div>
         </div>
     </div>
 </body>

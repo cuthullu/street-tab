@@ -23,15 +23,30 @@ html, body {
     height: 100%;
 }
 
-.time.holder{
+.center.holder{
     color: aliceblue;
-    font-size: xx-large;
+    font-size: large;
     flex-grow: 2;
+    align-items: flex-start;
+    width: 100%;
 }
 
-.title.holder{
-    color: aliceblue;
-    font-size: smaller;
+.pull-out {
+    padding-left: 25px;
+    padding-right: 15px;
+    background: rgba(0, 0, 0, 0.57);
 }
-.title{}
-.subtitle{}
+
+.top-right.holder{
+    align-items: flex-end;
+    width: 100%;
+    padding-right: 25px;
+    color: aliceblue;
+    font-size: xx-large;
+}
+.welcome {
+    font-family:Lobster;
+}
+.subtitle{
+    text-indent: 20px;
+}
