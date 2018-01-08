@@ -1,31 +1,49 @@
-function setUrl() {
-    var location = getLocation();
-    var heading = Math.floor(Math.random() * 360);
-    var url = "https://www.google.com/maps/embed/v1/streetview?"
-    url += "key=";
-    url += "AIzaSyCquBsEaFFp3k0DtET2S4gVOBujYdGAjLk";
-    url += "&pano=";
-    url += location.pid;
-    url += "&heading="
-    url += heading
-    url += "&pitch=10&fov=90"
 
-    document.getElementById('frame').setAttribute('src', url);
-    document.getElementById('welcome').innerHTML = location.welcome;
-    document.getElementById('subtitle').innerHTML = location.subtitle;
-    document.getElementById('greeting').innerHTML = getGreeting() + ", User";
+function setDecorations(location) {
+    document.getElementById('subtitle').innerHTML = location.title;
+    document.getElementById('greeting').innerHTML = getGreeting() + ", Tom";
     document.getElementById('time').innerHTML = getTime();
-    setInterval(function() {
+    setInterval(function () {
         document.getElementById('time').innerHTML = getTime();
-    },30000);
+    }, 30000);
+}
+
+function initialize() {
+    const location = getLocation()
+    const panorama = new google.maps.StreetViewPanorama(
+        document.getElementById('street-view'),
+        {
+            pano: location.pid,
+            pov: { heading: 165, pitch: 0 },
+            zoom: 1,
+            disableDefaultUI: true,
+        }
+    )
+    setDecorations(location)
+    setInterval(getIntervalFunction(panorama), 1)
+}
+
+function getIntervalFunction(panorama) {
+    let mouseDown = false
+    document.getElementById('street-view').addEventListener('mousedown', () => mouseDown = true)
+    document.getElementById('street-view').addEventListener('mouseup', () => mouseDown = false)
+
+    return () => {
+        if (!mouseDown) {
+            const pov = panorama.getPov()
+            pov.heading = (pov.heading + 0.01) % 360
+            panorama.setPov(pov)
+        }
+    }
 }
 
 function getLocation() {
     var location = JSON.parse(localStorage.getItem("newTabWorldLocation"));
     var time = Date.now();
     if (location === null || location.expires < Date.now()) {
-        location = locations[Math.floor( Math.random() * locations.length )];
+        location = locations[Math.floor(Math.random() * locations.length)];
         location.expires = getEndOfDay();
+        // const location = locations[Math.floor(Math.random() * locations.length)]
         location.welcome = getWelcome();
         localStorage.setItem('newTabWorldLocation', JSON.stringify(location));
     }
@@ -62,4 +80,4 @@ function getGreeting() {
     }
 }
 
-window.onload = setUrl;
+// window.onload = setUrl;

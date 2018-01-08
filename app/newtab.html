@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Street View</title>
     <script src="data/locations.js"></script>
+    <script src="data/welcomes.js"></script>
     <script src="js/streetUrlService.js"></script>
     <script src="js/touching.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
@@ -12,12 +13,13 @@
 </head>
 
 <body id="bod">
-    <iframe id="frame" class="full" frameborder="0" style="border:0"></iframe>
-    <div class="text holder">
+    <div id="street-view" class="full"></div>
+
+    <div class="text holder" id="test">
         <div class="top-right holder">
             <h1 class="time" id="time"></h1>
         </div>
-        <div class="center holder">
+        <div class="center holder" >
             <div class="pull-out" id="sidePanel">
                 <h2 class="greeting" id="greeting"></h2>
                 <h4 class="welcome" id="welcome"></h4>
@@ -25,6 +27,9 @@
             </div>
         </div>
     </div>
+    <script async defer
+         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCquBsEaFFp3k0DtET2S4gVOBujYdGAjLk&callback=initialize">
+    </script>
 </body>
 
 </html>
