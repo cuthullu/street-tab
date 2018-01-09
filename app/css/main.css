@@ -1,54 +1,73 @@
-html, body {
+.container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+  }
+  
+  html, body {
     height: 100%;
     margin: 0px;
     padding: 0px;
     overflow: hidden;
-}
-.full {
+  }
+  
+  .full {
     width: 100%;
     height: 100%;
-}
-.holder {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  }
+  
+  .container {
+    display: grid;
     pointer-events: none;
-}
-.text.holder{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.center.holder{
-    color: aliceblue;
-    font-size: large;
-    flex-grow: 2;
-    align-items: flex-start;
-    width: 100%;
-}
-
-.pull-out {
-    padding-left: 25px;
-    padding-right: 15px;
-    background: rgba(0, 0, 0, 0.57);
+    color: aliceblue;  
+    grid-template-columns: 400px auto 200px;
+    grid-template-rows: 200px 200px auto 50px;
+    grid-template-areas: ". . time" "title . ." ". . ." "footer footer footer";
+  }
+  
+  .container > div {
     pointer-events: all;
-}
-
-.top-right.holder{
-    align-items: flex-end;
-    width: 100%;
-    padding-right: 25px;
-    color: aliceblue;
+  }
+  
+  .time-box {
+    grid-area: time;
     font-size: xx-large;
-}
-.welcome {
-    font-family:Lobster;
-}
-.subtitle{
+    text-align: end;
+    padding-right: 30px;
+  }
+  
+  .time {
+    margin-top: 0px;
+  }
+  
+  .date {
+    margin-bottom: 0px;
+  }
+  
+  .title {
+    grid-area: title;
+    font-size: large;
+    background: rgba(0, 0, 0, 0.57);
+    padding-left: 15px;
+  }
+  
+  .welcome {
+    font-family: Lobster;
+  }
+  
+  .subtitle {
     text-indent: 20px;
-}
+  }
+  
+  .footer {
+    grid-area: footer;
+    align-self: end;
+    text-align: center;
+  }
+  
+  .footer > .address {
+    margin-bottom: 0px;
+    background: rgba(0, 0, 0, 0.57);
+    
+  }
