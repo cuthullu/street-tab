@@ -1,37 +1,45 @@
 function initialize() {
     const location = getLocation()
+    const h = location.heading || 165
+    const heading = Math.abs(parseFloat(h))
     const panorama = new google.maps.StreetViewPanorama(
         document.getElementById('street-view'),
         {
             pano: location.pid,
-            pov: { heading: 165, pitch: 0 },
+            pov: { heading, pitch: 0 },
             zoom: 1,
             disableDefaultUI: true,
         }
     )
     panorama.addListener('status_changed', () => getAddress(panorama));
-    setInterval(CreateHeadingIntervalFunction(panorama), 1)
+    setInterval(CreateHeadingIntervalFunction(location, panorama), 1)
 
     setTitleText(location)
     setInterval(setDateTime, 1000);
     setDateTime()
 }
 
-function CreateHeadingIntervalFunction(panorama) {
+function CreateHeadingIntervalFunction(location, panorama) {
     let mouseDown = false
 
     document.getElementById('street-view').addEventListener('mousedown', () => mouseDown = true)
     document.getElementById('street-view').addEventListener('mouseup', () => mouseDown = false)
+    window.addEventListener('beforeunload', () => saveLocation(location))
 
     return () => {
         if (!mouseDown) {
             requestAnimationFrame(() => {
                 const pov = panorama.getPov()
                 pov.heading = (pov.heading + 0.01) % 360
+                location.heading = pov.heading
                 panorama.setPov(pov)
             })
         }
     }
+}
+
+function saveLocation(location) {
+    localStorage.setItem('newTabWorldLocation', JSON.stringify(location));
 }
 
 function getLocation() {
