@@ -1,13 +1,3 @@
-
-function setDecorations(location) {
-    document.getElementById('subtitle').innerHTML = location.title;
-    document.getElementById('greeting').innerHTML = getGreeting() + ", Tom";
-    document.getElementById('time').innerHTML = getTime();
-    setInterval(function () {
-        document.getElementById('time').innerHTML = getTime();
-    }, 30000);
-}
-
 function initialize() {
     const location = getLocation()
     const panorama = new google.maps.StreetViewPanorama(
@@ -19,20 +9,27 @@ function initialize() {
             disableDefaultUI: true,
         }
     )
-    setDecorations(location)
-    setInterval(getIntervalFunction(panorama), 1)
+    panorama.addListener('status_changed', () => getAddress(panorama));
+    setInterval(CreateHeadingIntervalFunction(panorama), 1)
+
+    setTitleText(location)
+    setInterval(setDateTime, 1000);
+    setDateTime()
 }
 
-function getIntervalFunction(panorama) {
+function CreateHeadingIntervalFunction(panorama) {
     let mouseDown = false
+
     document.getElementById('street-view').addEventListener('mousedown', () => mouseDown = true)
     document.getElementById('street-view').addEventListener('mouseup', () => mouseDown = false)
 
     return () => {
         if (!mouseDown) {
-            const pov = panorama.getPov()
-            pov.heading = (pov.heading + 0.01) % 360
-            panorama.setPov(pov)
+            requestAnimationFrame(() => {
+                const pov = panorama.getPov()
+                pov.heading = (pov.heading + 0.01) % 360
+                panorama.setPov(pov)
+            })
         }
     }
 }
@@ -54,11 +51,36 @@ function getWelcome() {
     return welcomes[Math.floor(Math.random() * welcomes.length)];
 }
 
-function getTime() {
-    var d = new Date(Date.now());
-    var m = d.getMinutes();
+function getAddress(panorama) {
+    const { lat, lng } = latl = panorama.getLocation().latLng
+    const data = {
+        location: { lat: lat(), lng: lng() }
+    }
+    const Geocoder = new google.maps.Geocoder()
+
+    Geocoder.geocode(data, setAddresss)
+}
+
+function setAddresss([{ formatted_address }]) {
+    document.getElementById('address').innerHTML = formatted_address
+}
+
+function setTitleText(location) {
+    document.getElementById('subtitle').innerHTML = location.title;
+    document.getElementById('welcome').innerHTML = location.welcome;
+    document.getElementById('greeting').innerHTML = getGreeting() + " Tom";
+}
+
+function setDateTime() {
+    const d = new Date()
+    document.getElementById('date').innerHTML = d.toLocaleDateString()
+    document.getElementById('time').innerHTML = formateDate(d)
+}
+
+function formateDate(date) {
+    var m = date.getMinutes();
     var ms = m < 10 ? "0" + m : m + "";
-    return d.getHours() + ":" + ms;
+    return date.getHours() + ":" + ms;
 }
 
 function getEndOfDay() {
@@ -79,5 +101,3 @@ function getGreeting() {
         return "Good Evening"
     }
 }
-
-// window.onload = setUrl;
