@@ -12,7 +12,7 @@ function initialize() {
         }
     )
     panorama.addListener('status_changed', () => getAddress(panorama));
-    setInterval(CreateHeadingIntervalFunction(location, panorama), 1)
+    setInterval(CreateHeadingIntervalFunction(location, panorama), 100)
 
     setTitleText(location)
     setInterval(setDateTime, 1000);
@@ -21,7 +21,7 @@ function initialize() {
 
 function CreateHeadingIntervalFunction(location, panorama) {
     let mouseDown = false
-
+    
     document.getElementById('street-view').addEventListener('mousedown', () => mouseDown = true)
     document.getElementById('street-view').addEventListener('mouseup', () => mouseDown = false)
     window.addEventListener('beforeunload', () => saveLocation(location))
@@ -60,16 +60,16 @@ function getWelcome() {
 }
 
 function getAddress(panorama) {
-    const { lat, lng } = latl = panorama.getLocation().latLng
+    const { lat, lng } = panorama.getLocation().latLng
     const data = {
         location: { lat: lat(), lng: lng() }
     }
     const Geocoder = new google.maps.Geocoder()
 
-    Geocoder.geocode(data, setAddresss)
+    Geocoder.geocode(data, setAddress)
 }
 
-function setAddresss([{ formatted_address }]) {
+function setAddress([{ formatted_address }]) {
     document.getElementById('address').innerHTML = formatted_address
 }
 
@@ -82,10 +82,10 @@ function setTitleText(location) {
 function setDateTime() {
     const d = new Date()
     document.getElementById('date').innerHTML = d.toLocaleDateString()
-    document.getElementById('time').innerHTML = formateDate(d)
+    document.getElementById('time').innerHTML = formatDate(d)
 }
 
-function formateDate(date) {
+function formatDate(date) {
     var m = date.getMinutes();
     var ms = m < 10 ? "0" + m : m + "";
     return date.getHours() + ":" + ms;

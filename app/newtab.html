@@ -7,6 +7,7 @@
     <script src="data/locations.js"></script>
     <script src="data/welcomes.js"></script>
     <script src="js/streetUrlService.js"></script>
+    <script src="js/giphyService.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCquBsEaFFp3k0DtET2S4gVOBujYdGAjLk&callback=initialize">
     </script>
@@ -25,6 +26,26 @@
             <h2 class="greeting" id="greeting"></h2>
             <h4 class="welcome" id="welcome"></h4>
             <h3 class="subtitle" id="subtitle"></h3>
+        </div>
+        <div class="giphy-in">
+            <div class="giphy-control-bar">
+                <input type="text" id="giphySearchText" class="text-input" tabindex="1"/>
+                <button class="icon left" id="giphySearchLeft" tabindex="2">
+                    <img src="image/icon-left.svg"></img>
+                </button>
+                <button class="icon right" id="giphySearchRight" tabindex="2">
+                    <img src="image/icon-right.svg"></img>
+                </button>
+                <button class="icon link" id="giphySearchLink" tabindex="2">
+                        <img src="image/icon-link.svg"></img>
+                    </button>
+                <button class="icon close" id="giphySearchClose" tabindex="2">
+                    <img src="image/icon-close.svg"></img>
+                </button>
+            </div>
+
+            <img src="" id="giphyImage" />
+            <input id="giphyLinkText" class="hidden" tabindex="-1"></input>
         </div>
         <div class="footer">
             <h5 class="address" id="address" />
